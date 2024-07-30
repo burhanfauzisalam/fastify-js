@@ -1,20 +1,24 @@
 import bcrypt from "bcrypt";
 import jwt, { decode } from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 import userModel from "../../models/userModel.js";
 
 export default async function changePasswordUser(request, reply) {
   try {
-    const { username, oldPassword, newPassword } = request.query;
+    const { oldPassword, newPassword } = request.query;
+    const { username } = request.user.user;
+
     const user = await userModel.findOne({ username });
 
-    // Verifikasi pengguna melalui token JWT
-    const token = request.headers.token;
+    // // Verifikasi pengguna melalui token JWT
+    // const token = request.headers["token"];
 
-    const decoded = jwt.verify(token, "KEY");
+    // const decoded = jwt.verify(token, process.env.USER_KEY);
 
-    if (!decoded || decoded.user.password !== user.password) {
-      return reply.code(401).send({ message: "Unauthorized", decoded });
-    }
+    // if (request.user.user.password !== user.password) {
+    //   return reply.code(401).send({ message: "Unauthorized old token" });
+    // }
 
     // Temukan pengguna di database
     if (!user) {

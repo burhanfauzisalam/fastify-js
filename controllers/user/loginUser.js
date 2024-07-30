@@ -1,5 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+
 import userModel from "../../models/userModel.js";
 
 export default async function loginUser(request, reply) {
@@ -19,7 +22,7 @@ export default async function loginUser(request, reply) {
       username,
       password,
     };
-    const token = jwt.sign({ user }, "KEY", {
+    const token = jwt.sign({ user }, process.env.USER_KEY, {
       expiresIn: "1h",
     });
     reply.code(200).send({ message: "Login successful", token });

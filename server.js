@@ -2,12 +2,15 @@
 
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import dotenv from "dotenv";
+
 import connectDB from "./config/db.js"; // Import koneksi Mongoose
 import itemRoutes from "./routes/itemRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
 const fastify = Fastify({ logger: true });
-
+dotenv.config();
+const PORT = process.env.PORT || 2024;
 // Daftarkan plugin CORS
 fastify.register(cors, {
   origin: "*",
@@ -25,8 +28,8 @@ fastify.register(userRoutes);
 // Menjalankan server
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000, host: "0.0.0.0" });
-    fastify.log.info(`Server berjalan di http://localhost:3000`);
+    await fastify.listen({ port: PORT, host: "0.0.0.0" });
+    fastify.log.info(`Server berjalan di port ${PORT}`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
