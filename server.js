@@ -10,7 +10,7 @@ import userRoutes from "./routes/userRoutes.js";
 
 const fastify = Fastify({ logger: true });
 dotenv.config();
-const PORT = process.env.PORT || 2024;
+const PORT = process.env.PORT || 8080;
 // Daftarkan plugin CORS
 fastify.register(cors, {
   origin: "*",
