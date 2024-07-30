@@ -25,6 +25,9 @@ connectDB();
 fastify.register(itemRoutes);
 fastify.register(userRoutes);
 
+fastify.get("/", async (request, reply) => {
+  reply.code(200).send({ message: "Server running..." });
+});
 // Menjalankan server
 const start = async () => {
   try {
